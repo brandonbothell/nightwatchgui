@@ -2,6 +2,7 @@
   <div id="discordAuth">
     <button type="button" v-on:click="login()" v-if="!authenticated">Log in with Discord</button>
     <p v-if="user">Hello there, {{user.username}}!</p>
+    <button type="button" v-on:click="showSelf()" v-if="user">My User</button>
     <button type="button" v-on:click="logout()" v-if="authenticated">Logout</button>
   </div>
 </template>
@@ -57,6 +58,106 @@ export default {
       this.user = json
       window.localStorage.setItem('user', JSON.stringify(this.user))
       window.location = 'http://natsukigui.tk'
+    },
+    showSelf () {
+      let usersDoc = document.getElementById('usersList')
+      if (usersDoc.offsetParent === null) {
+        usersDoc.setAttribute('style', 'display:block')
+      }
+      let user = document.getElementById(this.user.id)
+      this.loadUserInfo(this.user.id)
+      user.scrollIntoView()
+    },
+    loadUserInfo (id) {
+      document.getElementById(id).setAttribute('style', 'display:block')
+      axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
+        let div = document.getElementById(response.data.id)
+        div.innerHTML = `
+        <table style="width:40%;margin:auto">
+        <tr>
+          <td>Date created</td>
+          <td>${response.data.dateCreated}</td>
+        </tr>
+        <tr>
+          <td>ID</td>
+          <td>${response.data.id}</td>
+        </tr>
+        <tr>
+          <td>Avatar</td>
+          <td><img src="${response.data.avatarUrl}" height="64" width="64"></td>
+        </tr>
+        <tr>
+          <td>Banned</td>
+          <td>${response.data.banned}</td>
+        </tr>
+        <tr>
+          <td>Date of last message</td>
+          <td>${response.data.dateLastMessage}</td>
+        </tr>
+        <tr>
+          <th>Level info</th>
+        </tr>
+        <tr>
+          <td>XP</td>
+          <td>${response.data.level.xp}</td>
+        </tr>
+        <tr>
+          <td>Level</td>
+          <td>${response.data.level.level}</td>
+        </tr>
+        <tr>
+          <td>Last level up</td>
+          <td>${response.data.level.timestamp}</td>
+        </tr>
+        <tr>
+          <th>Balance info</th>
+        </tr>
+        <tr>
+          <td>Balance</td>
+          <td>${response.data.balance.balance}</td>
+        </tr>
+        <tr>
+          <td>Net worth</td>
+          <td>${response.data.balance.netWorth}</td>
+        </tr>
+        <tr>
+          <td>Last claimed dailies</td>
+          <td>${response.data.balance.dateLastClaimedDailies}</td>
+        </tr>
+        <tr>
+          <th>Profile info</th>
+        </tr>
+        <tr>
+          <td>Title</td>
+          <td>${response.data.profile.title}</td>
+        </tr>
+        <tr>
+          <td>Bio</td>
+          <td>${response.data.profile.bio}</td>
+        </tr>
+        <tr>
+          <td>Background</td>
+          <td>${response.data.profile.background}</td>
+        </tr>
+        <tr>
+          <th>Settings</th>
+        </tr>
+        <tr>
+          <td>Levels enabled</td>
+          <td>${response.data.settings.levelsEnabled}</td>
+        </tr>
+        <tr>
+          <td>DMs enabled</td>
+          <td>${response.data.settings.directMessagesEnabled}</td>
+        </tr>
+        <tr>
+          <td>DB ID</td>
+          <td>${response.data.settings.id}</td>
+        </tr>
+        </table>
+        <hr>
+        `
+      })
     }
   }
 }

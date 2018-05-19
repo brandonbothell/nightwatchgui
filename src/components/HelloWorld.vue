@@ -4,6 +4,8 @@
     <br>
     <discordAuth></discordAuth>
     <br>
+    <div id="currentUser"></div>
+    <br>
     <span>
       Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't
       want to read the JSON on the official <a href="https://natsuki.tk/api/users" target="_blank">Natsuki API</a>.
