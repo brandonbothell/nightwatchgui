@@ -65,8 +65,10 @@ export default {
         usersDoc.setAttribute('style', 'display:block')
       }
       let user = document.getElementById(this.user.id)
-      this.loadUserInfo(this.user.id)
-      user.scrollIntoView()
+      if (user) {
+        this.loadUserInfo(this.user.id)
+        user.scrollIntoView()
+      }
     },
     loadUserInfo (id) {
       document.getElementById(id).setAttribute('style', 'display:block')
