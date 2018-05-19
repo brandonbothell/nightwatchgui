@@ -9,7 +9,7 @@
 <script>
 import axios from 'axios'
 const CLIENT_ID = '399794061059424257'
-const redirect = encodeURIComponent('http://localhost:8080/')
+const redirect = encodeURIComponent('http://natsukigui.tk/')
 
 export default {
   data: () => ({
@@ -56,7 +56,7 @@ export default {
       const json = response.data
       this.user = json
       window.localStorage.setItem('user', JSON.stringify(this.user))
-      window.location = 'http://localhost:8080/'
+      window.location = 'http://natsukigui.tk'
     }
   }
 }

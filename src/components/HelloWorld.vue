@@ -37,7 +37,16 @@ export default {
     'discordAuth': DiscordAuth,
     'credits': Credits
   },
-  name: 'HelloWorld'
+  name: 'HelloWorld',
+  created () {
+    document.title = 'Natsuki GUI'
+
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+    link.type = 'image/x-icon'
+    link.rel = 'shortcut icon'
+    link.href = 'http://www.iconj.com/ico/6/x/6xos2lmpgp.ico'
+    document.getElementsByTagName('head')[0].appendChild(link)
+  }
 }
 </script>
 
