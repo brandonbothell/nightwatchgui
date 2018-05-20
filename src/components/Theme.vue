@@ -46,6 +46,9 @@ export default {
     'navigationDrawer': NavigationDrawer
   },
   data: () => ({
-  })
+  }),
+  created () {
+    document.title = 'Natsuki GUI'
+  }
 }
 </script>
