@@ -24,9 +24,7 @@ export default {
   data () {
     return {
       msg: 'Hey, look! Giveaways!',
-      giveaways: null,
-      giveawaysOpen: [],
-      opened: []
+      giveaways: null
     }
   },
   created: function () {
@@ -39,18 +37,18 @@ export default {
       })
     },
     loadGiveawayInfo: function (id) {
-      if (this.giveawaysOpen.includes(id)) {
+      if (this.$store.state.opened.giveawaysOpen.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:none')
-        this.giveawaysOpen.splice(this.giveawaysOpen.indexOf(id), 1)
+        this.$store.commit('removeGiveawaysOpen', id)
         return true
       }
-      if (this.opened.includes(id)) {
-        document.getElementById(id).setAttribute('style', 'display:block')
-        this.giveawaysOpen.push(id)
+      if (this.$store.state.opened.giveawaysOpened.includes(id)) {
+        document.getElementById(id).setAttribute('style', 'display:initial')
+        this.$store.commit('addUsersOpen', id)
         return true
       }
-      this.giveawaysOpen.push(id)
-      this.opened.push(id)
+      this.$store.commit('addGiveawaysOpen', id)
+      this.$store.commit('addGiveawaysOpened', id)
       axios.get(`https://natsuki.tk/api/giveaways/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `

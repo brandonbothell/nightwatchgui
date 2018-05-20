@@ -24,9 +24,7 @@ export default {
   data () {
     return {
       msg: 'Hey, look! Referrals!',
-      referrals: null,
-      referralsOpen: [],
-      opened: []
+      referrals: null
       // socket: io.connect('http://51.15.224.123:5000/', {transports: ['websocket']})
     }
   },
@@ -66,18 +64,18 @@ export default {
       })
     },
     loadReferralInfo: function (id) {
-      if (this.referralsOpen.includes(id)) {
+      if (this.$store.state.opened.referralsOpen.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:none')
-        this.referralsOpen.splice(this.referralsOpen.indexOf(id), 1)
+        this.$store.commit('removeReferralsOpen', id)
         return true
       }
-      if (this.opened.includes(id)) {
-        document.getElementById(id).setAttribute('style', 'display:block')
-        this.referralsOpen.push(id)
+      if (this.$store.state.opened.referralsOpened.includes(id)) {
+        document.getElementById(id).setAttribute('style', 'display:initial')
+        this.$store.commit('addReferralsOpen', id)
         return true
       }
-      this.referralsOpen.push(id)
-      this.opened.push(id)
+      this.$store.commit('addReferralsOpen', id)
+      this.$store.commit('addReferralsOpened', id)
       axios.get(`https://natsuki.tk/api/referrals/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `

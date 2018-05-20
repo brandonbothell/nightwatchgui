@@ -24,9 +24,7 @@ export default {
   data () {
     return {
       msg: 'Hey, look! Guilds!',
-      guilds: null,
-      guildsOpen: [],
-      opened: []
+      guilds: null
       // socket: io.connect('http://51.15.224.123:5000/')
     }
   },
@@ -69,18 +67,18 @@ export default {
       })
     },
     loadGuildInfo: function (id) {
-      if (this.guildsOpen.includes(id)) {
+      if (this.$store.state.opened.guildsOpen.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:none')
-        this.guildsOpen.splice(this.guildsOpen.indexOf(id), 1)
+        this.$store.commit('removeGuildsOpen', id)
         return true
       }
-      if (this.opened.includes(id)) {
+      if (this.$store.state.opened.guildsOpened.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:initial')
-        this.guildsOpen.push(id)
+        this.$store.commit('addGuildsOpen', id)
         return true
       }
-      this.guildsOpen.push(id)
-      this.opened.push(id)
+      this.$store.commit('addGuildsOpen', id)
+      this.$store.commit('addGuildsOpened', id)
       axios.get(`https://natsuki.tk/api/guilds/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `

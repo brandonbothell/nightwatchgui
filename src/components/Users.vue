@@ -23,9 +23,7 @@ export default {
   data () {
     return {
       msg: 'Hey, look! Users!',
-      users: null,
-      usersOpen: [],
-      opened: []
+      users: null
     }
   },
   created: function () {
@@ -38,21 +36,22 @@ export default {
       })
     },
     loadUserInfo: function (id) {
-      if (this.usersOpen.includes(id)) {
+      if (this.$store.state.opened.usersOpen.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:none')
-        this.usersOpen.splice(this.usersOpen.indexOf(id), 1)
+        this.$store.commit('removeUsersOpen', id)
         return true
       }
-      if (this.opened.includes(id)) {
+      if (this.$store.state.opened.usersOpened.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:initial')
-        this.usersOpen.push(id)
+        this.$store.commit('addUsersOpen', id)
         return true
       }
-      this.usersOpen.push(id)
-      this.opened.push(id)
+      this.$store.commit('addUsersOpen', id)
+      this.$store.commit('addUsersOpened', id)
       axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
-        let div = document.getElementById(response.data.id)
+        let div = document.getElementById(id)
         div.innerHTML = `
+        <hr>
         <table style="width:40%;margin:auto">
         <tr>
           <td>Date created</td>

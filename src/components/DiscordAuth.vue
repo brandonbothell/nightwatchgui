@@ -86,9 +86,20 @@ export default {
     },
     loadUserInfo (id) {
       document.getElementById(id).setAttribute('style', 'display:initial')
+      if (this.$store.state.opened.usersOpen.includes(id)) {
+        return true
+      }
+      if (this.$store.state.opened.usersOpened.includes(id)) {
+        document.getElementById(id).setAttribute('style', 'display:initial')
+        this.$store.commit('addUsersOpen', id)
+        return true
+      }
+      this.$store.commit('addUsersOpen', id)
+      this.$store.commit('addUsersOpened', id)
       axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `
+        <hr>
         <table style="width:40%;margin:auto">
         <tr>
           <td>Date created</td>
