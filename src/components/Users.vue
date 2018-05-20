@@ -8,10 +8,21 @@
       <span id="viewUsers">Show Users</span>
     </v-tooltip>
     <div id='usersList' style="display:none">
-      <h4 v-for="user in users" :key="JSON.stringify(user.id)" style="font-weight:normal">
-        <a style="cursor:pointer" v-on:click="loadUserInfo(user.id)">{{ user.name }}</a>
-        <div :id="user.id"></div>
-      </h4>
+      <table style="margin:auto" class="centered">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody v-for="user in users" :key="JSON.stringify(user.id)" style="font-weight:normal">
+          <tr style="cursor:pointer" @click="loadUserInfo(user.id)">
+            <td>
+              {{ user.name }}
+              <div :id="user.id"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -23,7 +34,16 @@ export default {
   data () {
     return {
       msg: 'Hey, look! Users!',
-      users: null
+      users: null,
+      headers: [
+        {
+          text: 'Property',
+          align: 'center',
+          sortable: false,
+          value: 'property'
+        },
+        { text: 'Value', value: 'setting', align: 'center' }
+      ]
     }
   },
   created: function () {
@@ -52,7 +72,14 @@ export default {
         let div = document.getElementById(id)
         div.innerHTML = `
         <hr>
-        <table style="width:40%;margin:auto">
+        <table style="margin:auto" class="highlight centered">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
         <tr>
           <td>Date created</td>
           <td>${response.data.dateCreated}</td>
@@ -74,9 +101,6 @@ export default {
           <td>${response.data.dateLastMessage}</td>
         </tr>
         <tr>
-          <th>Level info</th>
-        </tr>
-        <tr>
           <td>XP</td>
           <td>${response.data.level.xp}</td>
         </tr>
@@ -87,9 +111,6 @@ export default {
         <tr>
           <td>Last level up</td>
           <td>${response.data.level.timestamp}</td>
-        </tr>
-        <tr>
-          <th>Balance info</th>
         </tr>
         <tr>
           <td>Balance</td>
@@ -104,9 +125,6 @@ export default {
           <td>${response.data.balance.dateLastClaimedDailies}</td>
         </tr>
         <tr>
-          <th>Profile info</th>
-        </tr>
-        <tr>
           <td>Title</td>
           <td>${response.data.profile.title}</td>
         </tr>
@@ -117,9 +135,6 @@ export default {
         <tr>
           <td>Background</td>
           <td>${response.data.profile.background}</td>
-        </tr>
-        <tr>
-          <th>Settings</th>
         </tr>
         <tr>
           <td>Levels enabled</td>
@@ -133,6 +148,7 @@ export default {
           <td>DB ID</td>
           <td>${response.data.settings.id}</td>
         </tr>
+        </tbody>
         </table>
         <hr>
         `

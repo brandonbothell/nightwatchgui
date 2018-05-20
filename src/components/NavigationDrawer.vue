@@ -52,6 +52,7 @@
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Natsuki GUI</v-toolbar-title>
+    <!-- TODO: Move hello username and login and logout here -->
     </v-toolbar>
 </div>
 </template>

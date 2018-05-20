@@ -8,10 +8,21 @@
         <span id="viewReferrals">Show Users</span>
       </v-tooltip>
       <div id='referralsList' style="display:none">
-        <h4 v-for="referral in referrals" :key="JSON.stringify(referral.id)" style="font-weight:normal">
-          <a style="cursor:pointer" v-on:click="loadReferralInfo(referral.id)">{{ referral.name }}</a>
-          <div :id="referral.id" style="display:initial"></div>
-        </h4>
+        <table style="margin:auto" class="centered">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody v-for="referral in referrals" :key="JSON.stringify(referral.id)" style="font-weight:normal">
+          <tr style="cursor:pointer" @click="loadReferralInfo(referral.id)">
+            <td>
+              {{ referral.name }}
+              <div :id="referral.id"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       </div>
   </div>
 </template>
@@ -79,7 +90,14 @@ export default {
       axios.get(`https://natsuki.tk/api/referrals/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `
-        <table style="width:40%;margin:auto">
+        <table style="margin:auto" class="highlight centered">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
         <tr>
           <td>Date created</td>
           <td>${response.data.dateCreated}</td>
@@ -89,15 +107,12 @@ export default {
           <td>${response.data.id}</td>
         </tr>
         <tr>
-          <th>Settings</th>
-        </tr>
-        <tr>
           <td>Levels enabled</td>
           <td>${response.data.settings.levelsEnabled}</td>
         </tr>
         <tr>
-        <td>DMs enabled</td>
-        <td>${response.data.settings.directMessagesEnabled}</td>
+          <td>DMs enabled</td>
+          <td>${response.data.settings.directMessagesEnabled}</td>
         </tr>
         <tr>
           <td>DB ID</td>
@@ -111,6 +126,7 @@ export default {
           <td>Suggestions</td>
           <td>${response.data.suggestions}</td>
         </tr>
+        </tbody>
       </table>
       <hr>
         `

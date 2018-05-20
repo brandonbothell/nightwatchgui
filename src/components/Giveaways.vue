@@ -8,10 +8,21 @@
         <span id="viewGiveaways">Show Giveaways</span>
       </v-tooltip>
       <div id='giveawaysList' style="display:none">
-        <h4 v-for="giveaway in giveaways" :key="JSON.stringify(giveaway.id)" style="font-weight:normal">
-          <a style="cursor:pointer" v-on:click="loadGiveawayInfo(giveaway.id)">{{ giveaway.name }}</a>
-          <div :id="giveaway.id" style="display:block"></div>
-        </h4>
+        <table style="margin:auto" class="centered">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody v-for="giveaway in giveaways" :key="JSON.stringify(giveaway.id)" style="font-weight:normal">
+          <tr style="cursor:pointer" @click="loadGiveawayInfo(giveaway.id)">
+            <td>
+              {{ giveaway.name }}
+              <div :id="giveaway.id"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       </div>
   </div>
 </template>
@@ -52,7 +63,14 @@ export default {
       axios.get(`https://natsuki.tk/api/giveaways/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `
-        <table style="width:40%;margin:auto">
+        <table style="margin:auto" class="highlight centered">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
         <tr>
           <td>Date created</td>
           <td>${response.data.dateCreated}</td>
@@ -60,9 +78,6 @@ export default {
         <tr>
           <td>ID</td>
           <td>${response.data.id}</td>
-        </tr>
-        <tr>
-          <th>Settings</th>
         </tr>
         <tr>
           <td>Levels enabled</td>
@@ -84,6 +99,7 @@ export default {
           <td>Suggestions</td>
           <td>${response.data.suggestions}</td>
         </tr>
+        </tbody>
       </table>
       <hr>
         `
