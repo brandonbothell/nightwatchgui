@@ -1,11 +1,16 @@
 <template>
   <div class='referrals'>
-      <h2>{{ msg }}</h2>
-      <button type="button" id="visibilityButton3" v-on:click="changeVisibility()">Show Referrals</button>
+      <p style="font-size:20px">{{ msg }}</p>
+      <v-tooltip right>
+        <v-btn slot="activator" @click="changeVisibility()" icon large>
+          <v-icon large id="referralsArrow">arrow_drop_down</v-icon>
+        </v-btn>
+        <span id="viewReferrals">Show Users</span>
+      </v-tooltip>
       <div id='referralsList' style="display:none">
         <h4 v-for="referral in referrals" :key="JSON.stringify(referral.id)" style="font-weight:normal">
           <a style="cursor:pointer" v-on:click="loadReferralInfo(referral.id)">{{ referral.name }}</a>
-          <div :id="referral.id" style="display:block"></div>
+          <div :id="referral.id" style="display:initial"></div>
         </h4>
       </div>
   </div>
@@ -114,34 +119,22 @@ export default {
       })
     },
     changeVisibility: function () {
-      let button = document.getElementById('visibilityButton3')
+      let button = document.getElementById('viewReferrals')
       let div = document.getElementById('referralsList')
       var x = div.offsetParent
       if (x === null) {
-        div.setAttribute('style', 'display:block')
+        div.setAttribute('style', 'display:initial')
         button.textContent = 'Hide Referrals'
+        document.getElementById('referralsArrow').textContent = 'arrow_drop_up'
       } else {
         div.setAttribute('style', 'display:none')
         button.textContent = 'Show Referrals'
+        document.getElementById('referralsArrow').textContent = 'arrow_drop_down'
       }
     }
   }
 }
 </script>
 
-<style scoped>
-button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    cursor: pointer;
-}
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
+<style>
 </style>

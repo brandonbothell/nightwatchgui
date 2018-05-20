@@ -1,18 +1,22 @@
 <template>
-  <div class='users'>
-      <h2>{{ msg }}</h2>
-      <button type="button" id="visibilityButton1" v-on:click="changeVisibility()">Show Users</button>
-      <div id='usersList' style="display:none">
-        <h4 v-for="user in users" :key="JSON.stringify(user.id)" style="font-weight:normal">
-          <a style="cursor:pointer" v-on:click="loadUserInfo(user.id)">{{ user.name }}</a>
-          <div :id="user.id"></div>
-        </h4>
-      </div>
+  <div id='users'>
+    <p style="font-size:20px">{{ msg }}</p>
+    <v-tooltip right>
+      <v-btn slot="activator" @click="changeVisibility()" icon large>
+        <v-icon large id="usersArrow">arrow_drop_down</v-icon>
+      </v-btn>
+      <span id="viewUsers">Show Users</span>
+    </v-tooltip>
+    <div id='usersList' style="display:none">
+      <h4 v-for="user in users" :key="JSON.stringify(user.id)" style="font-weight:normal">
+        <a style="cursor:pointer" v-on:click="loadUserInfo(user.id)">{{ user.name }}</a>
+        <div :id="user.id"></div>
+      </h4>
+    </div>
   </div>
 </template>
 
 <script>
-
 import axios from 'axios'
 export default {
   name: 'Users',
@@ -40,7 +44,7 @@ export default {
         return true
       }
       if (this.opened.includes(id)) {
-        document.getElementById(id).setAttribute('style', 'display:block')
+        document.getElementById(id).setAttribute('style', 'display:initial')
         this.usersOpen.push(id)
         return true
       }
@@ -136,34 +140,23 @@ export default {
       })
     },
     changeVisibility: function () {
-      let button = document.getElementById('visibilityButton1')
+      let button = document.getElementById('viewUsers')
+      let arrow = document.getElementById('usersArrow')
       let div = document.getElementById('usersList')
       var x = div.offsetParent
       if (x === null) {
-        div.setAttribute('style', 'display:block')
+        div.setAttribute('style', 'display:initial')
         button.textContent = 'Hide Users'
+        arrow.textContent = 'arrow_drop_up'
       } else {
         div.setAttribute('style', 'display:none')
         button.textContent = 'Show Users'
+        arrow.textContent = 'arrow_drop_down'
       }
     }
   }
 }
 </script>
 
-<style scoped>
-button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    cursor: pointer;
-}
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
+<style>
 </style>

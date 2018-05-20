@@ -1,16 +1,16 @@
 <template>
   <div id="discordAuth">
-    <button type="button" v-on:click="login()" v-if="!authenticated">Log in with Discord</button>
+    <v-btn style="background-color:#8aa1fc" v-if="!authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;Log in with Discord</v-btn>
     <p v-if="user">Hello there, {{user.username}}!</p>
-    <button type="button" v-on:click="showSelf()" v-if="user">My User</button>
-    <button type="button" v-on:click="logout()" v-if="authenticated">Logout</button>
+    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user">My User</v-btn>
+    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="authenticated">Logout</v-btn>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 const CLIENT_ID = '399794061059424257'
-const redirect = encodeURIComponent('http://natsukigui.tk/')
+const redirect = encodeURIComponent('http://localhost:8080/')
 
 export default {
   data: () => ({
@@ -57,21 +57,35 @@ export default {
       const json = response.data
       this.user = json
       window.localStorage.setItem('user', JSON.stringify(this.user))
-      window.location = 'http://natsukigui.tk'
+      window.location = 'http://localhost:8080'
     },
     showSelf () {
-      let usersDoc = document.getElementById('usersList')
+      let usersDoc = document.getElementById('usersData')
+      let users = document.getElementById('usersList')
       if (usersDoc.offsetParent === null) {
-        usersDoc.setAttribute('style', 'display:block')
+        usersDoc.setAttribute('style', 'display:initial')
+      }
+      if (users.offsetParent === null) {
+        users.setAttribute('style', 'display:initial')
+      }
+      if (document.getElementById('guildsData').offsetParent !== null) {
+        document.getElementById('guildsData').setAttribute('style', 'display:none')
+      }
+      if (document.getElementById('giveawaysData').offsetParent !== null) {
+        document.getElementById('giveawaysData').setAttribute('style', 'display:none')
+      }
+      if (document.getElementById('referralsData').offsetParent !== null) {
+        document.getElementById('referralsData').setAttribute('style', 'display:none')
       }
       let user = document.getElementById(this.user.id)
       if (user) {
         this.loadUserInfo(this.user.id)
         user.scrollIntoView()
       }
+      document.getElementById('usersArrow').textContent = 'arrow_drop_up'
     },
     loadUserInfo (id) {
-      document.getElementById(id).setAttribute('style', 'display:block')
+      document.getElementById(id).setAttribute('style', 'display:initial')
       axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
         let div = document.getElementById(response.data.id)
         div.innerHTML = `
@@ -165,19 +179,5 @@ export default {
 }
 </script>
 
-<style scoped>
-button:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  cursor: pointer;
-}
-button {
-  background-color: #8aa1fc; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
+<style>
 </style>

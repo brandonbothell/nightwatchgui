@@ -1,11 +1,16 @@
 <template>
   <div class='guilds'>
-      <h2>{{ msg }}</h2>
-      <button type="button" id="visibilityButton" v-on:click="changeVisibility()">Show Guilds</button>
+      <p style="font-size:20px">{{ msg }}</p>
+      <v-tooltip right>
+        <v-btn slot="activator" @click="changeVisibility()" icon large>
+          <v-icon large id="guildsArrow">arrow_drop_down</v-icon>
+        </v-btn>
+        <span id="viewGuilds">Show Guilds</span>
+      </v-tooltip>
       <div id='guildsList' style="display:none">
         <h4 v-for="guild in guilds" :key="JSON.stringify(guild.id)" style="font-weight:normal">
           <a style="cursor:pointer" v-on:click="loadGuildInfo(guild.id)">{{ guild.name }}</a>
-          <div :id="guild.id" style="display:block"></div>
+          <div :id="guild.id" style="display:initial"></div>
         </h4>
       </div>
   </div>
@@ -56,6 +61,9 @@ export default {
   },
   methods: {
     loadGuilds: function () {
+      if (this.guilds) {
+        return true
+      }
       axios.get('https://natsuki.tk/api/guilds').then(response => {
         this.guilds = response.data
       })
@@ -67,7 +75,7 @@ export default {
         return true
       }
       if (this.opened.includes(id)) {
-        document.getElementById(id).setAttribute('style', 'display:block')
+        document.getElementById(id).setAttribute('style', 'display:initial')
         this.guildsOpen.push(id)
         return true
       }
@@ -114,34 +122,22 @@ export default {
       })
     },
     changeVisibility: function () {
-      let button = document.getElementById('visibilityButton')
+      let button = document.getElementById('viewGuilds')
       let div = document.getElementById('guildsList')
       var x = div.offsetParent
       if (x === null) {
-        div.setAttribute('style', 'display:block')
+        div.setAttribute('style', 'display:initial')
         button.textContent = 'Hide Guilds'
+        document.getElementById('guildsArrow').textContent = 'arrow_drop_up'
       } else {
         div.setAttribute('style', 'display:none')
         button.textContent = 'Show Guilds'
+        document.getElementById('guildsArrow').textContent = 'arrow_drop_down'
       }
     }
   }
 }
 </script>
 
-<style scoped>
-button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    cursor: pointer;
-}
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
+<style>
 </style>
