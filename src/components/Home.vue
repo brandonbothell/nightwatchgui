@@ -35,9 +35,7 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-footer app fixed>
-      <span>&copy; 2018 JasonHaxStuff | Thanks to Tanner Goins for allowing me to use code from his Discord bot, <a href="https://github.com/NatsukiBot" target="_blank">Natsuki</a>'s API.</span>
-    </v-footer>
+    <customFooter></customFooter>
   </v-app>
 </template>
 
@@ -48,6 +46,7 @@ import Giveaways from './Giveaways.vue'
 import Referrals from './Referrals.vue'
 import DiscordAuth from './DiscordAuth.vue'
 import NavigationDrawer from './NavigationDrawer.vue'
+import Footer from './Footer.vue'
 export default {
   components: {
     'guilds': Guilds,
@@ -55,15 +54,16 @@ export default {
     'giveaways': Giveaways,
     'referrals': Referrals,
     'discordAuth': DiscordAuth,
-    'navigationDrawer': NavigationDrawer
+    'navigationDrawer': NavigationDrawer,
+    'customFooter': Footer
   },
   data: () => ({
   }),
   created () {
     document.title = 'Natsuki GUI'
-    if (!window.location.toString().includes('www.')) {
+    /* if (!window.location.toString().includes('www.')) {
       window.location = 'http://www.natsukigui.tk'
-    }
+    } */
   },
   methods: {
     screenBool () {
