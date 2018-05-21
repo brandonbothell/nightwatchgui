@@ -49,7 +49,7 @@ export default {
       this.code = null
     },
     async fetchToken () {
-      const response = await axios.get(`http://66.244.124.97:5001/api/auth/token/discord?code=${this.code}&redirect=${redirect}`)
+      const response = await axios.get(`http://192.243.102.112:5001/api/auth/token/discord?code=${this.code}&redirect=${redirect}`)
       const json = response.data
       this.accessToken = json.access_token
       this.authenticated = true
