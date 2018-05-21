@@ -61,9 +61,9 @@ export default {
   }),
   created () {
     document.title = 'Natsuki GUI'
-    /* if (!window.location.toString().includes('www.')) {
+    if (!window.location.toString().includes('www.')) {
       window.location = 'http://www.natsukigui.tk'
-    } */
+    }
   },
   methods: {
     screenBool () {
