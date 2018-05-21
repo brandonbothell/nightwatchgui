@@ -2,7 +2,7 @@
   <div id="discordAuth">
     <v-btn style="background-color:#8aa1fc" v-if="!authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="screenBool()">Log in with Discord</span></v-btn>
     <span v-if="user">Hello there, {{user.username}}!</span>
-    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user"><v-icon>person</v-icon> <span v-if="screenBool()">User</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user" id="selfButton"><v-icon>person</v-icon> <span v-if="screenBool()">User</span></v-btn>
     <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="screenBool()">Logout</span></v-btn>
   </div>
 </template>
@@ -80,6 +80,9 @@ export default {
       }
       if (document.getElementById('referralsData').offsetParent !== null) {
         document.getElementById('referralsData').setAttribute('style', 'display:none')
+      }
+      if (document.getElementById('usersButton').offsetParent !== null) {
+        document.getElementById('usersButton').setAttribute('style', 'display:none;background-color:#8aa1fc')
       }
       let user = document.getElementById(this.user.id)
       if (user) {
