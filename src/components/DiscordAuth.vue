@@ -86,8 +86,8 @@ export default {
       }
       let user = document.getElementById(this.user.id)
       if (user) {
-        this.loadUserInfo(this.user.id)
         user.scrollIntoView()
+        this.loadUserInfo(this.user.id)
       }
       document.getElementById('usersArrow').textContent = 'arrow_drop_up'
     },
