@@ -1,9 +1,9 @@
 <template>
   <div id="discordAuth">
-    <v-btn style="background-color:#8aa1fc" v-if="!authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="screenBool()">Log in with Discord</span></v-btn>
-    <span v-if="user">Hello there, {{user.username}}!</span>
-    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user" id="selfButton"><v-icon>person</v-icon> <span v-if="screenBool()">User</span></v-btn>
-    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="screenBool()">Logout</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" v-if="!this.$store.state.auth.authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="screenBool()">Log in with Discord</span></v-btn>
+    <span v-if="this.$store.state.auth.user">Hello there, {{this.$store.state.auth.user.username}}!</span>
+    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="screenBool()">User</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="this.$store.state.auth.authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="screenBool()">Logout</span></v-btn>
   </div>
 </template>
 
@@ -14,22 +14,18 @@ const redirect = encodeURIComponent('http://natsukigui.tk/')
 
 export default {
   data: () => ({
-    authenticated: false,
-    code: null,
-    accessToken: null,
-    user: null
   }),
   created () {
     const token = window.localStorage.getItem('token')
     const user = window.localStorage.getItem('user')
     if (token && user) {
-      this.accessToken = token
-      this.user = JSON.parse(user)
-      this.authenticated = true
+      this.$store.commit('setToken', token)
+      this.$store.commit('setUser', JSON.parse(user))
+      this.$store.commit('setAuthenticated', true)
     } else if (token) {
       this.fetchUser()
-    } else if (!this.accessToken && !this.user && this.$route.query.code) {
-      this.code = this.$route.query.code
+    } else if (!this.$store.state.auth.accessToken && !this.$store.state.auth.user && this.$route.query.code) {
+      this.$store.commit('setCode', this.$route.query.code)
       this.fetchToken()
     }
   },
@@ -43,24 +39,24 @@ export default {
     },
     logout () {
       window.localStorage.clear()
-      this.authenticated = false
-      this.user = null
-      this.accessToken = null
-      this.code = null
+      this.$store.commit('setAuthenticated', false)
+      this.$store.commit('setCode', null)
+      this.$store.commit('setToken', null)
+      this.$store.commit('setUser', null)
     },
     async fetchToken () {
-      const response = await axios.get(`http://192.243.102.112:5001/api/auth/token/discord?code=${this.code}&redirect=${redirect}`)
+      const response = await axios.get(`http://192.243.102.112:5001/api/auth/token/discord?code=${this.$store.state.auth.code}&redirect=${redirect}`)
       const json = response.data
-      this.accessToken = json.access_token
-      this.authenticated = true
-      window.localStorage.setItem('token', this.accessToken)
+      this.$store.commit('setToken', json.access_token)
+      this.$store.commit('setAuthenticated', true)
+      window.localStorage.setItem('token', this.$store.state.auth.accessToken)
       this.fetchUser()
     },
     async fetchUser () {
-      const response = await axios.get('https://discordapp.com/api/users/@me', {headers: {Authorization: `Bearer ${this.accessToken}`}})
+      const response = await axios.get('https://discordapp.com/api/users/@me', {headers: {Authorization: `Bearer ${this.$store.state.auth.accessToken}`}})
       const json = response.data
-      this.user = json
-      window.localStorage.setItem('user', JSON.stringify(this.user))
+      this.$store.commit('setUser', json)
+      window.localStorage.setItem('user', JSON.stringify(this.$store.state.auth.user))
       window.top.location = 'http://natsukigui.tk'
     },
     showSelf () {
@@ -84,10 +80,10 @@ export default {
       if (document.getElementById('usersButton').offsetParent !== null) {
         document.getElementById('usersButton').setAttribute('style', 'display:none;background-color:#8aa1fc')
       }
-      let user = document.getElementById(this.user.id)
+      let user = document.getElementById(this.$store.state.auth.user.id)
       if (user) {
         user.scrollIntoView()
-        this.loadUserInfo(this.user.id)
+        this.loadUserInfo(this.$store.state.auth.user.id)
       }
       document.getElementById('usersArrow').textContent = 'arrow_drop_up'
     },

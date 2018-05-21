@@ -4,6 +4,14 @@
     <v-content>
       <v-container fluid fill-height text-xs-center>
         <v-layout justify-center align-center row wrap>
+          <v-avatar
+          :tile="false"
+          size="70"
+          color="grey lighten-4"
+          v-if="this.$store.state.auth.user && this.$store.state.auth.user.avatar"
+          >
+            <img :src="'https://cdn.discordapp.com/avatars/' + this.$store.state.auth.user.id + '/' + this.$store.state.auth.user.avatar + '.png'" />
+          </v-avatar>
           <p v-if="!screenBool()">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</p>
           <v-chip label outline color="green" v-if="screenBool()">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</v-chip>
           <v-flex xs12>
