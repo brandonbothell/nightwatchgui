@@ -1,9 +1,9 @@
 <template>
   <div id="discordAuth">
-    <v-btn style="background-color:#8aa1fc" v-if="!authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;Log in with Discord</v-btn>
+    <v-btn style="background-color:#8aa1fc" v-if="!authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="screenBool()">Log in with Discord</span></v-btn>
     <span v-if="user">Hello there, {{user.username}}!</span>
-    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user">My User</v-btn>
-    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="authenticated">Logout</v-btn>
+    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user"><v-icon>person</v-icon> <span v-if="screenBool()">User</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="screenBool()">Logout</span></v-btn>
   </div>
 </template>
 
@@ -34,6 +34,10 @@ export default {
     }
   },
   methods: {
+    screenBool () {
+      let x = window.innerWidth >= 870
+      return x
+    },
     login () {
       window.location = `https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`
     },
@@ -45,7 +49,7 @@ export default {
       this.code = null
     },
     async fetchToken () {
-      const response = await axios.get(`http://localhost:5001/api/auth/token/discord?code=${this.code}&redirect=${redirect}`)
+      const response = await axios.get(`http://66.244.124.97:5001/api/auth/token/discord?code=${this.code}&redirect=${redirect}`)
       const json = response.data
       this.accessToken = json.access_token
       this.authenticated = true
@@ -57,7 +61,7 @@ export default {
       const json = response.data
       this.user = json
       window.localStorage.setItem('user', JSON.stringify(this.user))
-      window.location = 'http://natsukigui.tk'
+      window.top.location = 'http://natsukigui.tk'
     },
     showSelf () {
       let usersDoc = document.getElementById('usersData')

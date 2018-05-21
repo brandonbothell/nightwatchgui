@@ -54,7 +54,6 @@
       <v-toolbar-title>Natsuki GUI</v-toolbar-title>
       <v-spacer></v-spacer>
       <discordAuth/>
-    <!-- TODO: Move hello username and login and logout here -->
     </v-toolbar>
 </div>
 </template>
@@ -83,7 +82,9 @@ export default {
         document.getElementById('referralsData').setAttribute('style', 'display:none')
       }
       document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
-      this.drawer = false
+      document.getElementById('guildsButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
+      document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
+      document.getElementById('referralsButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
     },
     users () {
       let users = document.getElementById('usersData')
@@ -93,7 +94,6 @@ export default {
           users.setAttribute('style', 'display:initial')
         }
         document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
-        this.drawer = false
       }
     },
     guilds () {
@@ -103,7 +103,7 @@ export default {
           this.dashboard()
           guilds.setAttribute('style', 'display:initial')
         }
-        this.drawer = false
+        document.getElementById('guildsButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
       }
     },
     giveaways () {
@@ -113,7 +113,7 @@ export default {
           this.dashboard()
           giveaways.setAttribute('style', 'display:initial')
         }
-        this.drawer = false
+        document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
       }
     },
     referrals () {
@@ -123,7 +123,7 @@ export default {
           this.dashboard()
           referrals.setAttribute('style', 'display:initial')
         }
-        this.drawer = false
+        document.getElementById('referralsButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
       }
     }
   }
