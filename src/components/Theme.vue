@@ -6,7 +6,7 @@
         <v-layout justify-center align-center row wrap>
           <v-chip label outline color="green">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</v-chip>
           <v-flex xs12>
-            <discordAuth/>
+            <v-btn large style="background-color:#8aa1fc" @click="showUsers()" id=usersButton>View Users</v-btn>
             <users style="display:none" id='usersData'/>
             <guilds style="display:none" id='guildsData'/>
             <giveaways style="display:none" id='giveawaysData'/>
@@ -49,6 +49,35 @@ export default {
   }),
   created () {
     document.title = 'Natsuki GUI'
+  },
+  methods: {
+    showUsers () {
+      let users = document.getElementById('usersData')
+      if (users) {
+        if (!users.offsetParent) {
+          this.dashboard()
+          users.setAttribute('style', 'display:initial')
+          document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
+        }
+        document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
+        this.drawer = false
+      }
+    },
+    dashboard () {
+      if (document.getElementById('usersData').offsetParent !== null) {
+        document.getElementById('usersData').setAttribute('style', 'display:none')
+      }
+      if (document.getElementById('guildsData').offsetParent !== null) {
+        document.getElementById('guildsData').setAttribute('style', 'display:none')
+      }
+      if (document.getElementById('giveawaysData').offsetParent !== null) {
+        document.getElementById('giveawaysData').setAttribute('style', 'display:none')
+      }
+      if (document.getElementById('referralsData').offsetParent !== null) {
+        document.getElementById('referralsData').setAttribute('style', 'display:none')
+      }
+      this.drawer = false
+    }
   }
 }
 </script>

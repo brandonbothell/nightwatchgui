@@ -52,13 +52,19 @@
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Natsuki GUI</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <discordAuth/>
     <!-- TODO: Move hello username and login and logout here -->
     </v-toolbar>
 </div>
 </template>
 
 <script>
+import DiscordAuth from './DiscordAuth.vue'
 export default {
+  components: {
+    'discordAuth': DiscordAuth
+  },
   data: () => ({
     drawer: true
   }),
@@ -76,6 +82,7 @@ export default {
       if (document.getElementById('referralsData').offsetParent !== null) {
         document.getElementById('referralsData').setAttribute('style', 'display:none')
       }
+      document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
       this.drawer = false
     },
     users () {
@@ -85,6 +92,7 @@ export default {
           this.dashboard()
           users.setAttribute('style', 'display:initial')
         }
+        document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
         this.drawer = false
       }
     },

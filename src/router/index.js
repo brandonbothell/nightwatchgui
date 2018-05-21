@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Vuetify from 'vuetify'
 import Theme from '@/components/Theme'
 import store from '../store'
+import Users from '@/components/Users'
 
 Vue.use(Router)
 Vue.use(Vuetify)

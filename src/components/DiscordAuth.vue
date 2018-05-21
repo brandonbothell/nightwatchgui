@@ -1,7 +1,7 @@
 <template>
   <div id="discordAuth">
     <v-btn style="background-color:#8aa1fc" v-if="!authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;Log in with Discord</v-btn>
-    <p v-if="user">Hello there, {{user.username}}!</p>
+    <span v-if="user">Hello there, {{user.username}}!</span>
     <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="user">My User</v-btn>
     <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="authenticated">Logout</v-btn>
   </div>
