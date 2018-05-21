@@ -10,7 +10,7 @@
 <script>
 import axios from 'axios'
 const CLIENT_ID = '399794061059424257'
-const redirect = encodeURIComponent('http://natsukigui.tk/')
+const redirect = encodeURIComponent('http://www.natsukigui.tk/')
 
 export default {
   data: () => ({
@@ -57,7 +57,7 @@ export default {
       const json = response.data
       this.$store.commit('setUser', json)
       window.localStorage.setItem('user', JSON.stringify(this.$store.state.auth.user))
-      window.top.location = 'http://natsukigui.tk'
+      window.top.location = 'http://www.natsukigui.tk'
     },
     showSelf () {
       let usersDoc = document.getElementById('usersData')
