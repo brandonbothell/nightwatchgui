@@ -12,13 +12,13 @@
           >
             <img :src="'https://cdn.discordapp.com/avatars/' + this.$store.state.auth.user.id + '/' + this.$store.state.auth.user.avatar + '.png'" />
           </v-avatar>
-          <p v-if="!screenBool()">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</p>
-          <v-chip label outline color="green" v-if="screenBool()">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</v-chip>
+          <p v-if="!this.$store.state.site.desktop">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</p>
+          <v-chip label outline color="green" v-if="this.$store.state.site.desktop">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</v-chip>
           <v-flex xs12>
-            <v-btn large style="background-color:#8aa1fc" @click="showUsers()" id='usersButton'><v-icon>account_circle</v-icon> <span v-if="screenBool()">View Users</span></v-btn>
-            <v-btn large style="background-color:#8aa1fc" @click="showGuilds()" id='guildsButton'><i class="fas fa-users"></i>&nbsp;<span v-if="screenBool()">View Guilds</span></v-btn>
-            <v-btn large style="background-color:#8aa1fc" @click="showGiveaways()" id='giveawaysButton'><v-icon>card_giftcard</v-icon> <span v-if="screenBool()">View Giveaways</span></v-btn>
-            <v-btn large style="background-color:#8aa1fc" @click="showReferrals()" id='referralsButton'><v-icon>arrow_forward</v-icon> <span v-if="screenBool()">View Referrals</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" @click="showUsers()" id='usersButton'><v-icon>account_circle</v-icon> <span v-if="this.$store.state.site.desktop">View Users</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" @click="showGuilds()" id='guildsButton'><i class="fas fa-users"></i>&nbsp;<span v-if="this.$store.state.site.desktop">View Guilds</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" @click="showGiveaways()" id='giveawaysButton'><v-icon>card_giftcard</v-icon> <span v-if="this.$store.state.site.desktop">View Giveaways</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" @click="showReferrals()" id='referralsButton'><v-icon>arrow_forward</v-icon> <span v-if="this.$store.state.site.desktop">View Referrals</span></v-btn>
             <users style="display:none" id='usersData'/>
             <guilds style="display:none" id='guildsData'/>
             <giveaways style="display:none" id='giveawaysData'/>
@@ -63,12 +63,10 @@ export default {
     if (!window.location.toString().includes('www.')) {
       window.location = 'http://www.natsukigui.tk'
     }
+    let x = window.innerWidth >= 1000
+    this.$store.commit('setDesktop', x)
   },
   methods: {
-    screenBool () {
-      let x = window.innerWidth >= 1000
-      return x
-    },
     showUsers () {
       let users = document.getElementById('usersData')
       if (users) {

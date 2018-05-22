@@ -1,9 +1,9 @@
 <template>
   <div id="discordAuth">
-    <v-btn style="background-color:#8aa1fc" v-if="!this.$store.state.auth.authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="screenBool()">Log in with Discord</span></v-btn>
-    <span v-if="this.$store.state.auth.user && screenBool()">Hello there, {{this.$store.state.auth.user.username}}!</span>
-    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="screenBool()">User</span></v-btn>
-    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="this.$store.state.auth.authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="screenBool()">Logout</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" v-if="!this.$store.state.auth.authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="this.$store.state.site.desktop">Log in with Discord</span></v-btn>
+    <span v-if="this.$store.state.auth.user && this.$store.state.site.desktop">Hello there, {{this.$store.state.auth.user.username}}!</span>
+    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="this.$store.state.site.desktop">User</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="this.$store.state.auth.authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="this.$store.state.site.desktop">Logout</span></v-btn>
   </div>
 </template>
 
@@ -30,10 +30,6 @@ export default {
     }
   },
   methods: {
-    screenBool () {
-      let x = window.innerWidth >= 1000
-      return x
-    },
     login () {
       window.location = `https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`
     },
