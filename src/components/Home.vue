@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     screenBool () {
-      let x = window.innerWidth >= 870
+      let x = window.innerWidth >= 1000
       return x
     },
     showUsers () {
