@@ -4,7 +4,6 @@ export default {
     code: null,
     accessToken: null,
     user: null,
-    natsukiUser: null
   },
   mutations: {
     setAuthenticated (state, bool) {
@@ -18,9 +17,6 @@ export default {
     },
     setUser (state, user) {
       state.user = user
-    },
-    setNatsukiUser (state, natsukiUser) {
-      state.natsukiUser = natsukiUser
     }
   },
   actions: {
