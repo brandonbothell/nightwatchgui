@@ -22,7 +22,7 @@
             <div id='usersData'>
               <p style="font-size:20px">{{ msg }}</p>
               <v-tooltip right>
-                <v-btn slot="activator" @click="changeVisibility()" icon large>
+                <v-btn slot="activator" @click="loadUsers();changeVisibility()" icon large>
                   <v-icon large id="usersArrow">arrow_drop_down</v-icon>
                 </v-btn>
                 <span id="viewUsers">Show Users</span>
@@ -89,10 +89,12 @@ export default {
   created: function () {
     let x = window.innerWidth >= 1000
     this.$store.commit('setDesktop', x)
-    this.loadUsers()
   },
   methods: {
     loadUsers: function () {
+      if (this.users) {
+        return true
+      }
       axios.get('https://natsuki.tk/api/users').then(response => {
         this.users = response.data
       })

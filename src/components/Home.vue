@@ -59,9 +59,9 @@ export default {
   data: () => ({
   }),
   created () {
-    /* if (!window.location.toString().includes('www.')) {
+    if (!window.location.toString().includes('www.')) {
       window.location = 'http://www.natsukigui.tk'
-    } */
+    }
     let x = window.innerWidth >= 1000
     this.$store.commit('setDesktop', x)
   }
