@@ -15,6 +15,14 @@
             <v-list-tile-title>Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile to="/profile" v-if="this.$store.state.auth.user">
+          <v-list-tile-action>
+            <v-icon>person</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Profile</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile to="/users">
           <v-list-tile-action>
             <v-icon>account_circle</v-icon>

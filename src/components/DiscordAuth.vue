@@ -2,7 +2,7 @@
   <div id="discordAuth">
     <v-btn style="background-color:#8aa1fc" v-if="!this.$store.state.auth.authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="this.$store.state.site.desktop">Log in with Discord</span></v-btn>
     <span v-if="this.$store.state.auth.user && this.$store.state.site.desktop">Hello there, {{this.$store.state.auth.user.username}}!</span>
-    <v-btn style="background-color:#8aa1fc" v-on:click="showSelf()" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="this.$store.state.site.desktop">User</span></v-btn>
+    <v-btn style="background-color:#8aa1fc" to="/profile" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="this.$store.state.site.desktop">Profile</span></v-btn>
     <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="this.$store.state.auth.authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="this.$store.state.site.desktop">Logout</span></v-btn>
   </div>
 </template>
@@ -10,7 +10,12 @@
 <script>
 import axios from 'axios'
 const CLIENT_ID = '399794061059424257'
-const redirect = encodeURIComponent('http://www.natsukigui.tk/')
+var redirect
+if (window.location.toString().includes('natsukigui')) {
+  redirect = encodeURIComponent('http://www.natsukigui.tk/')
+} else if (window.location.toString().includes('localhost')) {
+  redirect = encodeURIComponent('http://localhost:8080/')
+}
 
 export default {
   data: () => ({
@@ -53,35 +58,11 @@ export default {
       const json = response.data
       this.$store.commit('setUser', json)
       window.localStorage.setItem('user', JSON.stringify(this.$store.state.auth.user))
-      window.top.location = 'http://www.natsukigui.tk'
-    },
-    showSelf () {
-      let usersDoc = document.getElementById('usersData')
-      let users = document.getElementById('usersList')
-      if (usersDoc.offsetParent === null) {
-        usersDoc.setAttribute('style', 'display:initial')
+      if (window.location.toString().includes('natsukigui')) {
+        window.location = 'http://www.natsukigui.tk'
+      } else if (window.location.toString().includes('localhost')) {
+        window.location = 'http://localhost:8080'
       }
-      if (users.offsetParent === null) {
-        users.setAttribute('style', 'display:initial')
-      }
-      if (document.getElementById('guildsData').offsetParent !== null) {
-        document.getElementById('guildsData').setAttribute('style', 'display:none')
-      }
-      if (document.getElementById('giveawaysData').offsetParent !== null) {
-        document.getElementById('giveawaysData').setAttribute('style', 'display:none')
-      }
-      if (document.getElementById('referralsData').offsetParent !== null) {
-        document.getElementById('referralsData').setAttribute('style', 'display:none')
-      }
-      if (document.getElementById('usersButton').offsetParent !== null) {
-        document.getElementById('usersButton').setAttribute('style', 'display:none;background-color:#8aa1fc')
-      }
-      let user = document.getElementById(this.$store.state.auth.user.id)
-      if (user) {
-        user.scrollIntoView()
-        this.loadUserInfo(this.$store.state.auth.user.id)
-      }
-      document.getElementById('usersArrow').textContent = 'arrow_drop_up'
     },
     loadUserInfo (id) {
       document.getElementById(id).setAttribute('style', 'display:initial')

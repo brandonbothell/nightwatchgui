@@ -8,6 +8,7 @@ import Guilds from '@/components/Guilds'
 import Users from '@/components/Users'
 import Giveaways from '@/components/Giveaways'
 import Referrals from '@/components/Referrals'
+import Profile from '@/components/Profile'
 
 Vue.use(Router)
 Vue.use(Vuetify)
@@ -39,6 +40,11 @@ export default new Router({
       path: '/referrals',
       name: 'Referrals',
       component: Referrals
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     }
   ]
 })
