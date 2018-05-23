@@ -1,36 +1,75 @@
 <template>
-  <div class='giveaways'>
-      <p style="font-size:20px">{{ msg }}</p>
-      <v-tooltip right>
-        <v-btn slot="activator" @click="changeVisibility()" icon large>
-          <v-icon large id="giveawaysArrow">arrow_drop_down</v-icon>
-        </v-btn>
-        <span id="viewGiveaways">Show Giveaways</span>
-      </v-tooltip>
-      <div id='giveawaysList' style="display:none">
-        <table style="margin:auto" class="centered">
-        <thead>
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody v-for="giveaway in giveaways" :key="JSON.stringify(giveaway.id)" style="font-weight:normal">
-          <tr style="cursor:pointer" @click="loadGiveawayInfo(giveaway.id)">
-            <td>
-              {{ giveaway.name }}
-              <div :id="giveaway.id"></div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-  </div>
+  <v-app id="inspire" dark>
+    <navigationDrawer/>
+    <v-content>
+      <v-container fluid fill-height text-xs-center>
+        <v-layout justify-center align-center row wrap>
+          <v-avatar
+          :tile="false"
+          size="70"
+          color="grey lighten-4"
+          v-if="this.$store.state.auth.user && this.$store.state.auth.user.avatar"
+          >
+            <img :src="'https://cdn.discordapp.com/avatars/' + this.$store.state.auth.user.id + '/' + this.$store.state.auth.user.avatar + '.png'" />
+          </v-avatar>
+          <p v-if="!this.$store.state.site.desktop">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</p>
+          <v-chip label outline color="green" v-if="this.$store.state.site.desktop">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</v-chip>
+          <v-flex xs12>
+            <v-btn large style="background-color:#8aa1fc" to="/users" id='usersButton'><v-icon>account_circle</v-icon> <span v-if="this.$store.state.site.desktop">View Users</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" to="/guilds" id='guildsButton'><i class="fas fa-users"></i>&nbsp;<span v-if="this.$store.state.site.desktop">View Guilds</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" to="/giveaways" id='giveawaysButton'><v-icon>card_giftcard</v-icon> <span v-if="this.$store.state.site.desktop">View Giveaways</span></v-btn>
+            <v-btn large style="background-color:#8aa1fc" to="/referrals" id='referralsButton'><v-icon>arrow_forward</v-icon> <span v-if="this.$store.state.site.desktop">View Referrals</span></v-btn>
+              <div class='giveaways'>
+                <p style="font-size:20px">{{ msg }}</p>
+                <v-tooltip right>
+                  <v-btn slot="activator" @click="changeVisibility()" icon large>
+                    <v-icon large id="giveawaysArrow">arrow_drop_down</v-icon>
+                  </v-btn>
+                  <span id="viewGiveaways">Show Giveaways</span>
+                </v-tooltip>
+                <div id='giveawaysList' style="display:none">
+                  <table style="margin:auto" class="centered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody v-for="giveaway in giveaways" :key="JSON.stringify(giveaway.id)" style="font-weight:normal">
+                    <tr style="cursor:pointer" @click="loadGiveawayInfo(giveaway.id)">
+                      <td>
+                        {{ giveaway.name }}
+                        <div :id="giveaway.id"></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </v-flex>
+          <v-flex shrink>
+            <v-tooltip right>
+              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/natsukigui" icon large target="_blank">
+                <v-icon large>code</v-icon>
+              </v-btn>
+              <span>Source</span>
+            </v-tooltip>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
+    <customFooter></customFooter>
+  </v-app>
 </template>
 
 <script>
 import axios from 'axios'
-
+import Footer from './Footer.vue'
+import NavigationDrawer from './NavigationDrawer.vue'
 export default {
+  components: {
+    'customFooter': Footer,
+    'navigationDrawer': NavigationDrawer
+  },
   name: 'Giveaways',
   data () {
     return {
@@ -39,6 +78,8 @@ export default {
     }
   },
   created: function () {
+    let x = window.innerWidth >= 1000
+    this.$store.commit('setDesktop', x)
     this.loadGiveaways()
   },
   methods: {

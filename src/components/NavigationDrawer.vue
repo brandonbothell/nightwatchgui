@@ -7,7 +7,7 @@
       app
     >
       <v-list dense>
-        <v-list-tile @click="dashboard()">
+        <v-list-tile to="/">
           <v-list-tile-action>
             <v-icon>dashboard</v-icon>
           </v-list-tile-action>
@@ -15,7 +15,7 @@
             <v-list-tile-title>Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="users()">
+        <v-list-tile to="/users">
           <v-list-tile-action>
             <v-icon>account_circle</v-icon>
           </v-list-tile-action>
@@ -23,7 +23,7 @@
             <v-list-tile-title>Users</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="guilds()">
+        <v-list-tile to="/guilds">
           <v-list-tile-action>
             <v-icon>people</v-icon>
           </v-list-tile-action>
@@ -31,7 +31,7 @@
             <v-list-tile-title>Guilds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="giveaways()">
+        <v-list-tile to="/giveaways">
           <v-list-tile-action>
             <v-icon>card_giftcard</v-icon>
           </v-list-tile-action>
@@ -39,7 +39,7 @@
             <v-list-tile-title>Giveaways</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="referrals()">
+        <v-list-tile to="/referrals">
           <v-list-tile-action>
             <v-icon>arrow_forward</v-icon>
           </v-list-tile-action>
