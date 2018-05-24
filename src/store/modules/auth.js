@@ -3,7 +3,7 @@ export default {
     authenticated: false,
     code: null,
     accessToken: null,
-    user: null,
+    user: null
   },
   mutations: {
     setAuthenticated (state, bool) {
