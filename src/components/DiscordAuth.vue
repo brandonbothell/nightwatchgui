@@ -46,7 +46,7 @@ export default {
       this.$store.commit('setUser', null)
     },
     async fetchToken () {
-      const response = await axios.get(`http://192.243.102.112:5001/api/auth/token/discord?code=${this.$store.state.auth.code}&redirect=${redirect}`)
+      const response = await axios.get(`http://192.243.102.112:8000/discordauth?code=${this.$store.state.auth.code}&redirect=${redirect}`)
       const json = response.data
       this.$store.commit('setToken', json.access_token)
       this.$store.commit('setAuthenticated', true)
