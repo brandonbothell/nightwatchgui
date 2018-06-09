@@ -39,7 +39,7 @@
         </v-tooltip>
       </v-card-text>
       <v-card-text class="white--text pt-0">
-        Thanks to Tanner Goins for allowing me to use code from his Discord bot, <a href="https://github.com/NatsukiBot" target="_blank">Natsuki</a>'s API.
+        Thanks to Tanner Goins for teaching me a lot about programming in general.
       </v-card-text>
       <v-card-text class="white--text">
         &copy;2018 — <strong>JasonHaxStuff</strong>
