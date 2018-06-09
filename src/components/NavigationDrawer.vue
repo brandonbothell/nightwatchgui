@@ -73,7 +73,7 @@ export default {
     'discordAuth': DiscordAuth
   },
   data: () => ({
-    drawer: window.innerWidth >= 1000
+    drawer: false
   }),
   methods: {
     dashboard () {

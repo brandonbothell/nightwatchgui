@@ -4,16 +4,7 @@
     <v-content>
       <v-container fluid fill-height text-xs-center>
         <v-layout justify-center align-center row wrap>
-          <v-avatar
-          :tile="false"
-          size="70"
-          color="grey lighten-4"
-          v-if="this.$store.state.auth.user && this.$store.state.auth.user.avatar"
-          >
-            <img :src="'https://cdn.discordapp.com/avatars/' + this.$store.state.auth.user.id + '/' + this.$store.state.auth.user.avatar + '.png'" />
-          </v-avatar>
-          <p v-if="!this.$store.state.site.desktop">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</p>
-          <v-chip label outline color="green" v-if="this.$store.state.site.desktop">Welcome to the unnoffical Natsuki GUI! This website is mostly for people that cannot/don't want to read the JSON on the official&nbsp;<a href="https://natsuki.tk/api/users">Natsuki API</a>.</v-chip>
+          <chips />
           <v-flex xs12>
             <v-btn large style="background-color:#8aa1fc" to="/users" id='usersButton'><v-icon>account_circle</v-icon> <span v-if="this.$store.state.site.desktop">View Users</span></v-btn>
             <v-btn large style="background-color:#8aa1fc" to="/guilds" id='guildsButton'><i class="fas fa-users"></i>&nbsp;<span v-if="this.$store.state.site.desktop">View Guilds</span></v-btn>
@@ -66,10 +57,12 @@
 import axios from 'axios'
 import Footer from './Footer.vue'
 import NavigationDrawer from './NavigationDrawer.vue'
+import Chips from './Chips.vue'
 export default {
   components: {
     'customFooter': Footer,
-    'navigationDrawer': NavigationDrawer
+    'navigationDrawer': NavigationDrawer,
+    'chips': Chips
   },
   name: 'Referrals',
   data () {
