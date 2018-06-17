@@ -89,7 +89,7 @@ export default {
       }
       if (this.$store.state.opened.giveawaysOpened.includes(id)) {
         document.getElementById(id).setAttribute('style', 'display:initial')
-        this.$store.commit('addUsersOpen', id)
+        this.$store.commit('addGiveawaysOpen', id)
         return true
       }
       this.$store.commit('addGiveawaysOpen', id)
