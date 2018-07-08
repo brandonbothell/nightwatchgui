@@ -13,7 +13,7 @@
           </v-flex>
           <v-flex shrink>
             <v-tooltip right>
-              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/natsukigui" icon large target="_blank">
+              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/nightwatchgui" icon large target="_blank">
                 <v-icon large>code</v-icon>
               </v-btn>
               <span>Source</span>
@@ -42,7 +42,7 @@ export default {
   }),
   created () {
     if (!window.location.toString().includes('www.') && !window.location.toString().includes('localhost')) {
-      window.location = 'http://www.natsukigui.tk'
+      window.location = 'http://www.nightwatch.ga'
     }
     let x = window.innerWidth >= 1000
     this.$store.commit('setDesktop', x)

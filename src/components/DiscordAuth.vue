@@ -11,8 +11,8 @@
 import axios from 'axios'
 const CLIENT_ID = '399794061059424257'
 var redirect
-if (window.location.toString().includes('natsukigui')) {
-  redirect = encodeURIComponent('http://www.natsukigui.tk/')
+if (window.location.toString().includes('nightwatch')) {
+  redirect = encodeURIComponent('http://www.nightwatch.ga/')
 } else if (window.location.toString().includes('localhost')) {
   redirect = encodeURIComponent('http://localhost:8080/')
 }
@@ -58,8 +58,8 @@ export default {
       const json = response.data
       this.$store.commit('setUser', json)
       window.localStorage.setItem('user', JSON.stringify(this.$store.state.auth.user))
-      if (window.location.toString().includes('natsukigui')) {
-        window.location = 'http://www.natsukigui.tk'
+      if (window.location.toString().includes('nightwatch')) {
+        window.location = 'http://www.nightwatch.ga'
       } else if (window.location.toString().includes('localhost')) {
         window.location = 'http://localhost:8080'
       }

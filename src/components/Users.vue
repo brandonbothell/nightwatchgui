@@ -39,7 +39,7 @@
           </v-flex>
           <v-flex shrink>
             <v-tooltip right>
-              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/natsukigui" icon large target="_blank">
+              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/nightwatchgui" icon large target="_blank">
                 <v-icon large>code</v-icon>
               </v-btn>
               <span>Source</span>
@@ -88,7 +88,7 @@ export default {
       if (this.users) {
         return true
       }
-      axios.get('https://natsuki.tk/api/users').then(response => {
+      axios.get('http://51.15.253.55:5000/api/users').then(response => {
         this.users = response.data
       })
     },
@@ -105,7 +105,7 @@ export default {
       }
       this.$store.commit('addUsersOpen', id)
       this.$store.commit('addUsersOpened', id)
-      axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
+      axios.get(`http://51.15.253.55:5000/api/users/${id}`).then(response => {
         let div = document.getElementById(id)
         div.innerHTML = `
         <hr>

@@ -20,7 +20,7 @@
           <span>Twitter</span>
         </v-tooltip>
         <v-tooltip top>
-          <v-btn icon slot="activator" class="mx-3 white--text" target="_blank" href="https://discord.gg/ndxe5Qm">
+          <v-btn icon slot="activator" class="mx-3 white--text" target="_blank" href="https://discord.gg/AG7V6S8">
             <v-icon size="24px">{{ icons[2] }}</v-icon>
           </v-btn>
           <span>Discord</span>

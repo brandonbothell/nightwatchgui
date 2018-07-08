@@ -15,7 +15,7 @@
           </v-flex>
           <v-flex shrink>
             <v-tooltip right>
-              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/natsukigui" icon large target="_blank">
+              <v-btn slot="activator" href="https://github.com/jasonhaxstuff/nightwatchgui" icon large target="_blank">
                 <v-icon large>code</v-icon>
               </v-btn>
               <span>Source</span>
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     loadUserInfo: function (id) {
-      axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
+      axios.get(`http://51.15.253.55:5000/api/users/${id}`).then(response => {
         let div = document.getElementById('profile')
         div.innerHTML = `
         <hr>

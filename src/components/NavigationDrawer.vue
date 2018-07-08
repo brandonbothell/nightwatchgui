@@ -59,7 +59,7 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Natsuki GUI</v-toolbar-title>
+      <v-toolbar-title>Nightwatch GUI</v-toolbar-title>
       <v-spacer></v-spacer>
       <discordAuth/>
     </v-toolbar>
