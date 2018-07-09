@@ -1,9 +1,9 @@
 <template>
   <div id="discordAuth">
-    <v-btn style="background-color:#8aa1fc" v-if="!this.$store.state.auth.authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="this.$store.state.site.desktop">Log in with Discord</span></v-btn>
+    <v-btn style="background-color:#4286f4" v-if="!this.$store.state.auth.authenticated" @click="login()"><i class="fab fa-discord"/>&nbsp;<span v-if="this.$store.state.site.desktop">Log in with Discord</span></v-btn>
     <span v-if="this.$store.state.auth.user && this.$store.state.site.desktop">Hello there, {{this.$store.state.auth.user.username}}!</span>
-    <v-btn style="background-color:#8aa1fc" to="/profile" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="this.$store.state.site.desktop">Profile</span></v-btn>
-    <v-btn style="background-color:#8aa1fc" v-on:click="logout()" v-if="this.$store.state.auth.authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="this.$store.state.site.desktop">Logout</span></v-btn>
+    <v-btn style="background-color:#4286f4" to="/profile" v-if="this.$store.state.auth.user" id="selfButton"><v-icon>person</v-icon> <span v-if="this.$store.state.site.desktop">Profile</span></v-btn>
+    <v-btn style="background-color:#4286f4" v-on:click="logout()" v-if="this.$store.state.auth.authenticated"><i class="fas fa-sign-out-alt"/>&nbsp;<span v-if="this.$store.state.site.desktop">Logout</span></v-btn>
   </div>
 </template>
 

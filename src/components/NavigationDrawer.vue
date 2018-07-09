@@ -89,10 +89,10 @@ export default {
       if (document.getElementById('referralsData').offsetParent !== null) {
         document.getElementById('referralsData').setAttribute('style', 'display:none')
       }
-      document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
-      document.getElementById('guildsButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
-      document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
-      document.getElementById('referralsButton').setAttribute('style', 'background-color:#8aa1fc;display:initial')
+      document.getElementById('usersButton').setAttribute('style', 'background-color:#4286f4;display:initial')
+      document.getElementById('guildsButton').setAttribute('style', 'background-color:#4286f4;display:initial')
+      document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#4286f4;display:initial')
+      document.getElementById('referralsButton').setAttribute('style', 'background-color:#4286f4;display:initial')
     },
     users () {
       let users = document.getElementById('usersData')
@@ -101,7 +101,7 @@ export default {
           this.dashboard()
           users.setAttribute('style', 'display:initial')
         }
-        document.getElementById('usersButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
+        document.getElementById('usersButton').setAttribute('style', 'background-color:#4286f4;display:none')
       }
     },
     guilds () {
@@ -111,7 +111,7 @@ export default {
           this.dashboard()
           guilds.setAttribute('style', 'display:initial')
         }
-        document.getElementById('guildsButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
+        document.getElementById('guildsButton').setAttribute('style', 'background-color:#4286f4;display:none')
       }
     },
     giveaways () {
@@ -121,7 +121,7 @@ export default {
           this.dashboard()
           giveaways.setAttribute('style', 'display:initial')
         }
-        document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
+        document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#4286f4;display:none')
       }
     },
     referrals () {
@@ -131,7 +131,7 @@ export default {
           this.dashboard()
           referrals.setAttribute('style', 'display:initial')
         }
-        document.getElementById('referralsButton').setAttribute('style', 'background-color:#8aa1fc;display:none')
+        document.getElementById('referralsButton').setAttribute('style', 'background-color:#4286f4;display:none')
       }
     }
   }
