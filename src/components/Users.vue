@@ -130,10 +130,6 @@ export default {
           <td><img src="${response.data.avatarUrl}" height="64" width="64"></td>
         </tr>
         <tr>
-          <td>Banned</td>
-          <td>${response.data.banned}</td>
-        </tr>
-        <tr>
           <td>Date of last message</td>
           <td>${response.data.dateLastMessage}</td>
         </tr>
