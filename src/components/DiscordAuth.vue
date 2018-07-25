@@ -7,19 +7,21 @@
   </div>
 </template>
 
-<script>
+<script lang='ts'>
 import axios from 'axios'
+import Vue from 'vue'
+import { stripIndents } from 'common-tags'
+
 const CLIENT_ID = '399794061059424257'
-var redirect
+let redirect: string
+
 if (window.location.toString().includes('nightwatch')) {
   redirect = encodeURIComponent('http://www.nightwatch.ga/')
 } else if (window.location.toString().includes('localhost')) {
   redirect = encodeURIComponent('http://localhost:8080/')
 }
 
-export default {
-  data: () => ({
-  }),
+export default Vue.extend({
   created () {
     const token = window.localStorage.getItem('token')
     const user = window.localStorage.getItem('user')
@@ -36,7 +38,8 @@ export default {
   },
   methods: {
     login () {
-      window.location = `https://discordapp.com/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`
+      window.location.href = `https://discordapp.com/oauth2/authorize?client_id=${
+        CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`
     },
     logout () {
       window.localStorage.clear()
@@ -46,7 +49,8 @@ export default {
       this.$store.commit('setUser', null)
     },
     async fetchToken () {
-      const response = await axios.get(`http://192.243.102.112:8000/discordauth?code=${this.$store.state.auth.code}&redirect=${redirect}`)
+      const response = await axios.get(`http://192.243.102.112:8000/discordauth?code=${
+        this.$store.state.auth.code}&redirect=${redirect}`)
       const json = response.data
       this.$store.commit('setToken', json[0].access_token)
       this.$store.commit('setAuthenticated', true)
@@ -54,117 +58,19 @@ export default {
       this.fetchUser()
     },
     async fetchUser () {
-      const response = await axios.get('https://discordapp.com/api/users/@me', {headers: {Authorization: `Bearer ${this.$store.state.auth.accessToken}`}})
-      const json = response.data
-      this.$store.commit('setUser', json)
-      window.localStorage.setItem('user', JSON.stringify(this.$store.state.auth.user))
-      if (window.location.toString().includes('nightwatch')) {
-        window.location = 'http://www.nightwatch.ga'
-      } else if (window.location.toString().includes('localhost')) {
-        window.location = 'http://localhost:8080'
-      }
-    },
-    loadUserInfo (id) {
-      document.getElementById(id).setAttribute('style', 'display:initial')
-      if (this.$store.state.opened.usersOpen.includes(id)) {
-        return true
-      }
-      if (this.$store.state.opened.usersOpened.includes(id)) {
-        document.getElementById(id).setAttribute('style', 'display:initial')
-        this.$store.commit('addUsersOpen', id)
-        return true
-      }
-      this.$store.commit('addUsersOpen', id)
-      this.$store.commit('addUsersOpened', id)
-      axios.get(`https://natsuki.tk/api/users/${id}`).then(response => {
-        let div = document.getElementById(response.data.id)
-        div.innerHTML = `
-        <hr>
-        <table style="margin:auto" class="highlight centered">
-        <thead>
-          <tr>
-            <th>Property</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Date created</td>
-          <td>${response.data.dateCreated}</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>${response.data.id}</td>
-        </tr>
-        <tr>
-          <td>Avatar</td>
-          <td><img src="${response.data.avatarUrl}" height="64" width="64"></td>
-        </tr>
-        <tr>
-          <td>Banned</td>
-          <td>${response.data.banned}</td>
-        </tr>
-        <tr>
-          <td>Date of last message</td>
-          <td>${response.data.dateLastMessage}</td>
-        </tr>
-        <tr>
-          <td>XP</td>
-          <td>${response.data.level.xp}</td>
-        </tr>
-        <tr>
-          <td>Level</td>
-          <td>${response.data.level.level}</td>
-        </tr>
-        <tr>
-          <td>Last level up</td>
-          <td>${response.data.level.timestamp}</td>
-        </tr>
-        <tr>
-          <td>Balance</td>
-          <td>${response.data.balance.balance}</td>
-        </tr>
-        <tr>
-          <td>Net worth</td>
-          <td>${response.data.balance.netWorth}</td>
-        </tr>
-        <tr>
-          <td>Last claimed dailies</td>
-          <td>${response.data.balance.dateLastClaimedDailies}</td>
-        </tr>
-        <tr>
-          <td>Title</td>
-          <td>${response.data.profile.title}</td>
-        </tr>
-        <tr>
-          <td>Bio</td>
-          <td>${response.data.profile.bio}</td>
-        </tr>
-        <tr>
-          <td>Background</td>
-          <td>${response.data.profile.background}</td>
-        </tr>
-        <tr>
-          <td>Levels enabled</td>
-          <td>${response.data.settings.levelsEnabled}</td>
-        </tr>
-        <tr>
-          <td>DMs enabled</td>
-          <td>${response.data.settings.directMessagesEnabled}</td>
-        </tr>
-        <tr>
-          <td>DB ID</td>
-          <td>${response.data.settings.id}</td>
-        </tr>
-        </tbody>
-        </table>
-        <hr>
-        `
+      const { data: user } = await axios.get('https://discordapp.com/api/users/@me', {
+        headers: { Authorization: `Bearer ${this.$store.state.auth.accessToken}` }
       })
+
+      this.$store.commit('setUser', user)
+      window.localStorage.setItem('user', JSON.stringify(this.$store.state.auth.user))
+
+      if (window.location.toString().includes('nightwatch')) {
+        window.location.href = 'http://www.nightwatch.ga'
+      } else if (window.location.toString().includes('localhost')) {
+        window.location.href = 'http://localhost:8080'
+      }
     }
   }
-}
+})
 </script>
-
-<style>
-</style>

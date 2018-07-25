@@ -66,78 +66,16 @@
 </div>
 </template>
 
-<script>
+<script lang='ts'>
 import DiscordAuth from './DiscordAuth.vue'
-export default {
+import Vue from 'vue'
+
+export default Vue.extend({
   components: {
-    'discordAuth': DiscordAuth
+    discordAuth: DiscordAuth
   },
   data: () => ({
     drawer: false
-  }),
-  methods: {
-    dashboard () {
-      if (document.getElementById('usersData').offsetParent !== null) {
-        document.getElementById('usersData').setAttribute('style', 'display:none')
-      }
-      if (document.getElementById('guildsData').offsetParent !== null) {
-        document.getElementById('guildsData').setAttribute('style', 'display:none')
-      }
-      if (document.getElementById('giveawaysData').offsetParent !== null) {
-        document.getElementById('giveawaysData').setAttribute('style', 'display:none')
-      }
-      if (document.getElementById('referralsData').offsetParent !== null) {
-        document.getElementById('referralsData').setAttribute('style', 'display:none')
-      }
-      document.getElementById('usersButton').setAttribute('style', 'background-color:#4286f4;display:initial')
-      document.getElementById('guildsButton').setAttribute('style', 'background-color:#4286f4;display:initial')
-      document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#4286f4;display:initial')
-      document.getElementById('referralsButton').setAttribute('style', 'background-color:#4286f4;display:initial')
-    },
-    users () {
-      let users = document.getElementById('usersData')
-      if (users) {
-        if (!users.offsetParent) {
-          this.dashboard()
-          users.setAttribute('style', 'display:initial')
-        }
-        document.getElementById('usersButton').setAttribute('style', 'background-color:#4286f4;display:none')
-      }
-    },
-    guilds () {
-      let guilds = document.getElementById('guildsData')
-      if (guilds) {
-        if (!guilds.offsetParent) {
-          this.dashboard()
-          guilds.setAttribute('style', 'display:initial')
-        }
-        document.getElementById('guildsButton').setAttribute('style', 'background-color:#4286f4;display:none')
-      }
-    },
-    giveaways () {
-      let giveaways = document.getElementById('giveawaysData')
-      if (giveaways) {
-        if (!giveaways.offsetParent) {
-          this.dashboard()
-          giveaways.setAttribute('style', 'display:initial')
-        }
-        document.getElementById('giveawaysButton').setAttribute('style', 'background-color:#4286f4;display:none')
-      }
-    },
-    referrals () {
-      let referrals = document.getElementById('referralsData')
-      if (referrals) {
-        if (!referrals.offsetParent) {
-          this.dashboard()
-          referrals.setAttribute('style', 'display:initial')
-        }
-        document.getElementById('referralsButton').setAttribute('style', 'background-color:#4286f4;display:none')
-      }
-    }
-  }
-}
+  })
+})
 </script>
-
-<style>
-
-</style>

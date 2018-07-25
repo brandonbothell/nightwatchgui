@@ -48,10 +48,12 @@
   </v-footer>
 </template>
 
-<script>
-export default {
+<script lang='ts'>
+import Vue from 'vue'
+
+export default Vue.extend({
   data: () => ({
     icons: ['fab fa-github', 'fab fa-twitter', 'fab fa-discord', 'fas fa-cube', 'fab fa-instagram']
   })
-}
+})
 </script>
